@@ -11,8 +11,8 @@ class Inventory extends Model
 
     protected $guarded = [];
 
-    public function product()
+    public function variant()
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Variant::class);
     }
 }
