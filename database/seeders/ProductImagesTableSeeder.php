@@ -6,17 +6,17 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class InventoryTableSeeder extends Seeder
+class ProductImagesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        DB::table('inventory')->insert([
+        DB::table('product_images')->insert([
             [
-                'variant_id' => 1, // assuming the first variant
-                'quantity_available' => 100,
+                'product_id' => 1,
+                'image_path' => 'image.jpg',
             ],
         ]);
     }

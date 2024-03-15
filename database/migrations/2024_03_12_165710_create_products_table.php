@@ -20,7 +20,7 @@ return new class extends Migration
             $table->enum('category_type', ['featured', 'hot', 'new'])->nullable();
             $table->unsignedBigInteger('category_id');
 
-            $table->enum('status', ['active', 'inactive', 'discontinued']);
+            $table->enum('status', ['active', 'inactive']);
             $table->timestamps();
 
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');

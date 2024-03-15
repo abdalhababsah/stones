@@ -18,8 +18,7 @@ class AboutUsDataTable extends DataTable
                 return view('pages.home.about_us.columns._actions', compact('aboutUs'));
             })
             ->editColumn('image_path', function ($aboutUs) {
-                $bucketUrl = 'https://example-bucket-url.com/about_us_images/';
-                $imageUrl = $bucketUrl . $aboutUs->image_path;
+                $bucketUrl = config('filesystems.disks.s3.url');                $imageUrl = $bucketUrl . $aboutUs->image_path;
                 return '<img src="' . $imageUrl . '" height="50"/>';
             })
             ->rawColumns(['image_path', 'action'])

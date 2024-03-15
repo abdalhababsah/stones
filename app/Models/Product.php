@@ -12,22 +12,22 @@ class Product extends Model
 
     protected $guarded = [];
 
-    public function category()
+    public function category(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
 
-    public function variants()
+    public function variants(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Variant::class);
     }
 
-    public function images()
+    public function images(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(Image::class);
+        return $this->hasMany(ProductImage::class);
     }
 
-    public function seo()
+    public function seo(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(ProductSEO::class);
     }

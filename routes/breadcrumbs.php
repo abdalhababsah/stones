@@ -45,6 +45,10 @@ Breadcrumbs::for('categories.index', function (BreadcrumbTrail $trail) {
     $trail->parent('home');
     $trail->push('Categories', route('catalog.categories.index'));
 });
+Breadcrumbs::for('products.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->push('products', route('catalog.products.index'));
+});
 Breadcrumbs::for('variant_types.index', function ($trail) {
     $trail->parent('home');
     $trail->push('Variant Types', route('catalog.variant-types.index'));

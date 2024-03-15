@@ -4,6 +4,7 @@ use App\Http\Controllers\Apps\UserManagementController;
 use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\Catalog\BrandController;
 use App\Http\Controllers\Catalog\CategoryController;
+use App\Http\Controllers\Catalog\ProductController;
 use App\Http\Controllers\Catalog\VariantTypeController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
@@ -38,7 +39,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('brands', BrandController::class);
         Route::resource('categories', CategoryController::class);
         Route::resource('variant-types', VariantTypeController::class);
-        Route::resource('products', VariantTypeController::class);
+        Route::resource('products', ProductController::class);
 
     });
     Route::prefix('home')->name('home.')->group(function () {
