@@ -13,8 +13,9 @@ class HomeTableSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('home')->insert([
+        DB::table('homes')->insert([
             [
+                'image_title'=>'home page',
                 'image_path' => 'image.jpg',
                 'sort_order' => 1,
             ],

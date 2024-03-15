@@ -21,8 +21,8 @@ class Variant extends Model
         return $this->hasOne(Inventory::class);
     }
 
-    public function variants()
+    public function variantType()
     {
-        return $this->hasMany(Variant::class);
+        return $this->belongsTo(VariantType::class);
     }
 }

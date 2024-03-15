@@ -3,18 +3,12 @@
 use App\Http\Controllers\Apps\UserManagementController;
 use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\Catalog\BrandController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\Catalog\CategoryGroupController;
 use App\Http\Controllers\Catalog\CategoryController;
-use App\Http\Controllers\ProductsController;
-
-use App\Http\Controllers\Catalog\AttributeController;
-use App\Http\Controllers\Catalog\AttributeGroupController;
-use App\Http\Controllers\Sales\OrderController;
-use App\Http\Controllers\VariantTypeController;
-
+use App\Http\Controllers\Catalog\VariantTypeController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Home\HomeImagesController;
+use App\Http\Controllers\Home\AboutUsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -42,12 +36,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::prefix('catalog')->name('catalog.')->group(function () {
         Route::resource('brands', BrandController::class);
+        Route::resource('categories', CategoryController::class);
+        Route::resource('variant-types', VariantTypeController::class);
+        Route::resource('products', VariantTypeController::class);
 
-        
+    });
+    Route::prefix('home')->name('home.')->group(function () {
+        Route::resource('home-images', HomeImagesController::class);
+        Route::resource('about-us', AboutUsController::class);
 
     });
 
-    
+
 
 
 

@@ -11,4 +11,10 @@ class VariantType extends Model
 
     protected $guarded = [];
 
+
+
+    public function variants()
+    {
+        return $this->hasMany(Variant::class);
+    }
 }

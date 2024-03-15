@@ -37,7 +37,6 @@
 
                 <div class="menu-sub menu-sub-accordion">
                     <div class="menu-item">
-                        <!--begin:Menu link-->
                         <a class="menu-link {{ request()->routeIs('catalog.brands.*') ? 'active' : '' }}"
                            href="{{ route('catalog.brands.index') }}">
 							<span class="menu-bullet">
@@ -46,13 +45,62 @@
                             <span class="menu-title">Brands</span>
                         </a>
                     </div>
+                    <!-- Add Variant Type Menu Item Here -->
+
+                    <div class="menu-item">
+                        <a class="menu-link {{ request()->routeIs('catalog.variant-types.*') ? 'active' : '' }}"
+                           href="{{ route('catalog.variant-types.index') }}">
+							<span class="menu-bullet">
+								<span class="bullet bullet-dot"></span>
+							</span>
+                            <span class="menu-title">Variants</span>
+                        </a>
+                    </div>
+                    <div class="menu-item">
+                        <a class="menu-link {{ request()->routeIs('catalog.categories.*') ? 'active' : '' }}"
+                           href="{{ route('catalog.categories.index') }}">
+							<span class="menu-bullet">
+								<span class="bullet bullet-dot"></span>
+							</span>
+                            <span class="menu-title">categories</span>
+                        </a>
+                    </div>
 
                 </div>
+            </div>
+            <div data-kt-menu-trigger="click"
+                 class="menu-item menu-accordion {{ request()->routeIs('home.*') ? 'here show' : '' }}">
+                <span class="menu-link">
+					<span class="menu-icon">{!! getIcon('lots-shopping', 'fs-2') !!}</span>
+					<span class="menu-title">Home Page</span>
+					<span class="menu-arrow"></span>
+				</span>
 
+                <div class="menu-sub menu-sub-accordion">
+                    <div class="menu-item">
+                        <a class="menu-link {{ request()->routeIs('home.home-images.*') ? 'active' : '' }}"
+                           href="{{ route('home.home-images.index') }}">
+							<span class="menu-bullet">
+								<span class="bullet bullet-dot"></span>
+							</span>
+                            <span class="menu-title">Home Images</span>
+                        </a>
+                    </div>
+                    <!-- Add Variant Type Menu Item Here -->
+
+                    <div class="menu-item">
+                        <a class="menu-link {{ request()->routeIs('home.about-us.*') ? 'active' : '' }}"
+                           href="{{ route('home.about-us.index') }}">
+							<span class="menu-bullet">
+								<span class="bullet bullet-dot"></span>
+							</span>
+                            <span class="menu-title">About Us</span>
+                        </a>
+                    </div>
+
+
+                </div>
             </div>
         </div>
-
-
     </div>
-
 </div>

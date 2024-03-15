@@ -31,4 +31,9 @@ class Product extends Model
     {
         return $this->hasOne(ProductSEO::class);
     }
+
+    public function dimension()
+    {
+        return $this->hasOne(ProductDimension::class);
+    }
 }

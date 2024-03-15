@@ -39,5 +39,21 @@ Breadcrumbs::for('user-management.users.show', function (BreadcrumbTrail $trail,
 
 Breadcrumbs::for('brands.index', function (BreadcrumbTrail $trail) {
     $trail->parent('home');
-    $trail->push('Dashboard', route('catalog.brands.index'));
+    $trail->push('Brands', route('catalog.brands.index'));
+});
+Breadcrumbs::for('categories.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->push('Categories', route('catalog.categories.index'));
+});
+Breadcrumbs::for('variant_types.index', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Variant Types', route('catalog.variant-types.index'));
+});
+Breadcrumbs::for('home-images.index', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Home Images', route('home.home-images.index'));
+});
+Breadcrumbs::for('about-us.index', function ($trail) {
+    $trail->parent('home');
+    $trail->push('About Us', route('home.about-us.index'));
 });
