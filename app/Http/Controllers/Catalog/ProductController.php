@@ -17,13 +17,13 @@ class ProductController extends Controller
         return $dataTable->render('pages.catalog.products.list');
     }
 
-    public function create()
+    public function create(): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
     {
         // Return a view for creating a new Product
-        return view('catalog.products.create');
+        return view('pages.catalog.products.create');
     }
 
-    public function store(Request $request)
+    public function store(Request $request): \Illuminate\Http\JsonResponse
     {
         $validatedData = $request->validate([
             // Validation rules for product fields
@@ -41,19 +41,19 @@ class ProductController extends Controller
         }
     }
 
-    public function show(string $id)
+    public function show(string $id): \Illuminate\Http\JsonResponse
     {
         $product = Product::with(['variants.variantType', 'category', 'images', 'dimension', 'seo', 'variants.inventory'])->findOrFail($id);
         return response()->json($product);
     }
 
-    public function edit(string $id)
+    public function edit(string $id): \Illuminate\Contracts\View\View|\Illuminate\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application
     {
         $product = Product::with(['variants.variantType', 'category', 'images', 'dimension', 'seo', 'variants.inventory'])->findOrFail($id);
         return view('catalog.products.edit', compact('product'));
     }
 
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id): \Illuminate\Http\JsonResponse
     {
         $validatedData = $request->validate([
             // Validation rules

@@ -36,10 +36,11 @@
                 <!--begin::Toolbar-->
                 <div class="d-flex justify-content-end" data-kt-product-table-toolbar="base">
                     <!--begin::Add product-->
+                   <a href="{{route('catalog.products.create')}}">
                     <button type="button" class="btn btn-primary" >
                         {!! getIcon('plus', 'fs-2', '', 'i') !!}
                         Add product
-                    </button>
+                    </button></a>
                     <!--end::Add product-->
                 </div>
 
