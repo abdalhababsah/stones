@@ -110,37 +110,6 @@ var KTAppEcommerceSaveProduct = function () {
         });
     }
 
-    // Handle discount options
-    const handleDiscount = () => {
-        const discountOptions = document.querySelectorAll('input[name="discount_option"]');
-        const percentageEl = document.getElementById('kt_ecommerce_add_product_discount_percentage');
-        const fixedEl = document.getElementById('kt_ecommerce_add_product_discount_fixed');
-
-        discountOptions.forEach(option => {
-            option.addEventListener('change', e => {
-                const value = e.target.value;
-
-                switch (value) {
-                    case '2': {
-                        percentageEl.classList.remove('d-none');
-                        fixedEl.classList.add('d-none');
-                        break;
-                    }
-                    case '3': {
-                        percentageEl.classList.add('d-none');
-                        fixedEl.classList.remove('d-none');
-                        break;
-                    }
-                    default: {
-                        percentageEl.classList.add('d-none');
-                        fixedEl.classList.add('d-none');
-                        break;
-                    }
-                }
-            });
-        });
-    }
-
 
 
     // Category status handler
@@ -251,10 +220,10 @@ var KTAppEcommerceSaveProduct = function () {
                             }
                         }
                     },
-                    'shelf': {
+                    'quantity_sqm': {
                         validators: {
                             notEmpty: {
-                                message: 'Shelf quantity is required'
+                                message: 'Quantity is required'
                             }
                         }
                     },
@@ -350,7 +319,7 @@ var KTAppEcommerceSaveProduct = function () {
             // Handle forms
             handleStatus();
             handleConditions();
-            handleDiscount();
+
 
             handleSubmit();
         }

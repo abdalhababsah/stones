@@ -438,35 +438,19 @@
                                             <!--begin::Input group-->
                                             <div class="mb-10 fv-row">
                                                 <!--begin::Label-->
-                                                <label class="required form-label">Quantity</label>
+                                                <label class="required form-label">Quantity (in square meters)</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
                                                 <div class="d-flex gap-3">
-                                                    <input type="number" name="shelf" class="form-control mb-2" placeholder="On shelf" value="" />
-                                                    <input type="number" name="warehouse" class="form-control mb-2" placeholder="In warehouse" />
+                                                    <input type="number" name="quantity_sqm" class="form-control mb-2" placeholder="Quantity in m²" value="" />
                                                 </div>
                                                 <!--end::Input-->
                                                 <!--begin::Description-->
-                                                <div class="text-muted fs-7">Enter the product quantity.</div>
+                                                <div class="text-muted fs-7">Enter the product quantity in square meters.</div>
                                                 <!--end::Description-->
                                             </div>
                                             <!--end::Input group-->
-                                            <!--begin::Input group-->
-                                            <div class="fv-row">
-                                                <!--begin::Label-->
-                                                <label class="form-label">Allow Backorders</label>
-                                                <!--end::Label-->
-                                                <!--begin::Input-->
-                                                <div class="form-check form-check-custom form-check-solid mb-2">
-                                                    <input class="form-check-input" type="checkbox" value="" />
-                                                    <label class="form-check-label">Yes</label>
-                                                </div>
-                                                <!--end::Input-->
-                                                <!--begin::Description-->
-                                                <div class="text-muted fs-7">Allow customers to purchase products that are out of stock.</div>
-                                                <!--end::Description-->
-                                            </div>
-                                            <!--end::Input group-->
+
                                         </div>
                                         <!--end::Card header-->
                                     </div>
@@ -787,43 +771,49 @@
         <!--end::Content-->
     </div>
     <!--end::Content wrapper-->
-    <!--begin::Footer-->
-    <div id="kt_app_footer" class="app-footer">
-        <!--begin::Footer container-->
-        <div class="app-container container-fluid d-flex flex-column flex-md-row flex-center flex-md-stack py-3">
-            <!--begin::Copyright-->
-            <div class="text-gray-900 order-2 order-md-1">
-                <span class="text-muted fw-semibold me-1">2023&copy;</span>
-                <a href="https://keenthemes.com" target="_blank" class="text-gray-800 text-hover-primary">Keenthemes</a>
-            </div>
-            <!--end::Copyright-->
-            <!--begin::Menu-->
-            <ul class="menu menu-gray-600 menu-hover-primary fw-semibold order-1">
-                <li class="menu-item">
-                    <a href="https://keenthemes.com" target="_blank" class="menu-link px-2">About</a>
-                </li>
-                <li class="menu-item">
-                    <a href="https://devs.keenthemes.com" target="_blank" class="menu-link px-2">Support</a>
-                </li>
-                <li class="menu-item">
-                    <a href="https://1.envato.market/EA4JP" target="_blank" class="menu-link px-2">Purchase</a>
-                </li>
-            </ul>
-            <!--end::Menu-->
-        </div>
-        <!--end::Footer container-->
-    </div>
-    <!--end::Footer-->
+
 </div>
 <!--end:::Main-->
         <script src="https://code.jquery.com/jquery-3.x-git.min.js"></script>
 
 
+        <script>
+            $(document).ready(function() {
+                // Function to initialize the repeater
+                function initRepeater() {
+                    // Handle the addition of a new variation
+                    $('[data-repeater-create]').click(function() {
+                        var repeaterList = $('[data-repeater-list]');
+                        // Clone the first item as a template
+                        var newItem = repeaterList.find('[data-repeater-item]:first').clone();
+                        // Clear input values in the cloned item (optional)
+                        newItem.find('input').val('');
+                        newItem.find('select').prop('selectedIndex', 0);
+                        // Append the new item to the list
+                        repeaterList.append(newItem);
+                        // Rebind the delete button event to include the new item
+                        bindDeleteButtons();
+                    });
 
+                    // Bind delete button click event
+                    function bindDeleteButtons() {
+                        $('[data-repeater-delete]').off('click').on('click', function() {
+                            // Remove the closest repeater item
+                            $(this).closest('[data-repeater-item]').remove();
+                        });
+                    }
 
+                    // Initialize delete button bindings
+                    bindDeleteButtons();
+                }
 
-        <script src="{{ asset('assets/js/custom/apps/ecommerce/catalog/save-product.js') }}"></script>
+                // Initialize the repeater
+                initRepeater();
+            });
+        </script>
+
         <script src="{{ asset('assets/plugins/custom/formrepeater/formrepeater.bundle.js') }}"></script>
+        <script src="{{ asset('assets/js/custom/apps/ecommerce/catalog/save-product.js') }}"></script>
         <!--begin::Global Javascript Bundle-->
         <script src="{{ asset('assets/plugins/global/plugins.bundle.js') }}"></script>
 {{--        <script src="{{ asset('assets/js/scripts.bundle.js') }}"></script>--}}
