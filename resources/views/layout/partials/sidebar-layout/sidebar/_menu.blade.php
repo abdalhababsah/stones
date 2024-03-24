@@ -45,15 +45,15 @@
                             <span class="menu-title">Products</span>
                         </a>
                     </div>
-                    <div class="menu-item">
-                        <a class="menu-link {{ request()->routeIs('catalog.brands.*') ? 'active' : '' }}"
-                           href="{{ route('catalog.brands.index') }}">
-							<span class="menu-bullet">
-								<span class="bullet bullet-dot"></span>
-							</span>
-                            <span class="menu-title">Brands</span>
-                        </a>
-                    </div>
+{{--                    <div class="menu-item">--}}
+{{--                        <a class="menu-link {{ request()->routeIs('catalog.brands.*') ? 'active' : '' }}"--}}
+{{--                           href="{{ route('catalog.brands.index') }}">--}}
+{{--							<span class="menu-bullet">--}}
+{{--								<span class="bullet bullet-dot"></span>--}}
+{{--							</span>--}}
+{{--                            <span class="menu-title">Brands</span>--}}
+{{--                        </a>--}}
+{{--                    </div>--}}
                     <!-- Add Variant Type Menu Item Here -->
 
                     <div class="menu-item">
