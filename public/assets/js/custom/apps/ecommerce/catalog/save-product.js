@@ -9,7 +9,8 @@ var KTAppEcommerceSaveProduct = function () {
     const initQuill = () => {
         // Define all elements for quill editor
         const elements = [
-            '#kt_ecommerce_add_product_description',
+            '#kt_ecommerce_add_product_description_ar',
+            '#kt_ecommerce_add_product_description_en',
             '#kt_ecommerce_add_product_meta_description'
         ];
 
@@ -18,7 +19,7 @@ var KTAppEcommerceSaveProduct = function () {
             // Get quill element
             let quill = document.querySelector(element);
 
-            // Break if element not found
+            // Break if element not found6666
             if (!quill) {
                 return;
             }
@@ -93,22 +94,7 @@ var KTAppEcommerceSaveProduct = function () {
 
 
     // Init DropzoneJS --- more info:
-    const initDropzone = () => {
-        var myDropzone = new Dropzone("#kt_ecommerce_add_product_media", {
-            url: "https://keenthemes.com/scripts/void.php", // Set the url for your upload script location
-            paramName: "file", // The name that will be used to transfer the file
-            maxFiles: 10,
-            maxFilesize: 10, // MB
-            addRemoveLinks: true,
-            accept: function (file, done) {
-                if (file.name == "wow.jpg") {
-                    done("Naha, you don't.");
-                } else {
-                    done();
-                }
-            }
-        });
-    }
+
 
 
 
@@ -122,30 +108,20 @@ var KTAppEcommerceSaveProduct = function () {
             const value = e.target.value;
 
             switch (value) {
-                case "published": {
+                case "active": {
                     target.classList.remove(...statusClasses);
                     target.classList.add('bg-success');
                     hideDatepicker();
                     break;
                 }
-                case "scheduled": {
-                    target.classList.remove(...statusClasses);
-                    target.classList.add('bg-warning');
-                    showDatepicker();
-                    break;
-                }
+
                 case "inactive": {
                     target.classList.remove(...statusClasses);
                     target.classList.add('bg-danger');
                     hideDatepicker();
                     break;
                 }
-                case "draft": {
-                    target.classList.remove(...statusClasses);
-                    target.classList.add('bg-primary');
-                    hideDatepicker();
-                    break;
-                }
+
                 default:
                     break;
             }
@@ -184,6 +160,7 @@ var KTAppEcommerceSaveProduct = function () {
             });
         })
     }
+
 
     // Submit form handler
     const handleSubmit = () => {
@@ -257,52 +234,76 @@ var KTAppEcommerceSaveProduct = function () {
         submitButton.addEventListener('click', e => {
             e.preventDefault();
 
+            // Init FormData with the form
+            var formData = new FormData(form);
+
+            // Append product variants dynamically
+            $('div[data-repeater-item]').each(function() {
+                formData.append('variants[]', $(this).find('input[name="product_option"]').val());
+                formData.append('variant_values_en[]', $(this).find('input[name="product_option_value_en"]').val());
+                formData.append('variant_values_ar[]', $(this).find('input[name="product_option_value_ar"]').val());
+            });
+
             // Validate form before submit
-            if (validator) {
-                validator.validate().then(function (status) {
-                    console.log('validated!');
+            // Assuming you have a validation function or plugin initialized
+            if (true) { // Replace this with your actual validation check
+                submitButton.setAttribute('data-kt-indicator', 'on');
+                submitButton.disabled = true;
 
-                    if (status == 'Valid') {
-                        submitButton.setAttribute('data-kt-indicator', 'on');
-
-                        // Disable submit button whilst loading
-                        submitButton.disabled = true;
-
-                        setTimeout(function () {
-                            submitButton.removeAttribute('data-kt-indicator');
-
-                            Swal.fire({
-                                text: "Form has been successfully submitted!",
-                                icon: "success",
-                                buttonsStyling: false,
-                                confirmButtonText: "Ok, got it!",
-                                customClass: {
-                                    confirmButton: "btn btn-primary"
-                                }
-                            }).then(function (result) {
-                                if (result.isConfirmed) {
-                                    // Enable submit button after loading
-                                    submitButton.disabled = false;
-
-                                    // Redirect to customers list page
-                                    window.location = form.getAttribute("data-kt-redirect");
-                                }
-                            });
-                        }, 2000);
-                    } else {
+                // Perform AJAX submission
+                $.ajax({
+                    url: '{{ route("catalog.products.store") }}', // Adjust URL as needed
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    headers: {
+                        'X-CSRF-TOKEN': $('input[name="_token"]').val() // CSRF Token from form
+                    },
+                    success: function(response) {
                         Swal.fire({
-                            html: "Sorry, looks like there are some errors detected, please try again. <br/><br/>Please note that there may be errors in the <strong>General</strong> or <strong>Advanced</strong> tabs",
-                            icon: "error",
+                            text: "Product has been successfully submitted!",
+                            icon: "success",
                             buttonsStyling: false,
                             confirmButtonText: "Ok, got it!",
                             customClass: {
                                 confirmButton: "btn btn-primary"
                             }
                         });
+
+                        // Handle after success (e.g., redirecting or resetting the form)
+                        submitButton.removeAttribute('data-kt-indicator');
+                        submitButton.disabled = false;
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle error
+                        Swal.fire({
+                            text: "Error occurred: " + error,
+                            icon: "error",
+                            buttonsStyling: false,
+                            confirmButtonText: "Try again",
+                            customClass: {
+                                confirmButton: "btn btn-danger"
+                            }
+                        });
+
+                        submitButton.removeAttribute('data-kt-indicator');
+                        submitButton.disabled = false;
+                    }
+                });
+            } else {
+                // Handle validation failure
+                Swal.fire({
+                    text: "Please correct the errors in the form before submitting.",
+                    icon: "error",
+                    buttonsStyling: false,
+                    confirmButtonText: "Ok, got it!",
+                    customClass: {
+                        confirmButton: "btn btn-primary"
                     }
                 });
             }
-        })
+        });
     }
 
     // Public methods
@@ -313,7 +314,7 @@ var KTAppEcommerceSaveProduct = function () {
             initTagify();
 
 
-            initDropzone();
+
             initConditionsSelect2();
 
             // Handle forms

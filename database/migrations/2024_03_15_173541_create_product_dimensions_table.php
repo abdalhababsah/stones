@@ -19,7 +19,6 @@ return new class extends Migration
             $table->decimal('height', 10, 2);
             $table->string('dimension_unit', 10)->default('cm'); // Assuming centimeters
             $table->timestamps();
-
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
         });
     }

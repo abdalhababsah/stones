@@ -14,8 +14,8 @@ class VariantTypesTableSeeder extends Seeder
     public function run(): void
     {
         DB::table('variant_types')->insert([
-            ['name_en' => 'Color'],
-            ['name_en' => 'Size'],
+            ['name_en' => 'Color', 'name_ar' => 'اللون'],
+            ['name_en' => 'Size', 'name_ar' => 'الحجم'],
 
         ]);
     }

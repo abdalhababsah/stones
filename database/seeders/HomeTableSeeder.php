@@ -15,7 +15,8 @@ class HomeTableSeeder extends Seeder
     {
         DB::table('homes')->insert([
             [
-                'image_title'=>'home page',
+                'image_title_en' => 'Home Page', // English title
+                'image_title_ar' => 'الصفحة الرئيسية', // Arabic title
                 'image_path' => 'image.jpg',
                 'sort_order' => 1,
             ],

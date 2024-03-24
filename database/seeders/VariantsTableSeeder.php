@@ -17,8 +17,9 @@ class VariantsTableSeeder extends Seeder
             [
                 'product_id' => 1, // assuming the first product
                 'variant_type_id' => 1, // assuming 'Color' is id 1
-                'variant_value' => 'Black',
-                'price' => 999.99,
+                'variant_value_ar' => 'Black',
+                'variant_value_en' => 'اسود',
+
             ],
         ]);
     }

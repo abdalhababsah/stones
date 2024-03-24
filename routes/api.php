@@ -6,6 +6,10 @@ use App\Actions\SampleUserApi;
 use App\Models\Cdr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\ProductsApiController;
+use App\Http\Controllers\Api\HomeImagesApiController;
+use App\Http\Controllers\Api\ContactUsApiController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -17,17 +21,24 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::post('/contact-us', [ContactUsApiController::class, 'store']);
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::get('/home-images', [HomeImagesApiController::class, 'index']);
 
-Route::get('/otp', function (Request $request) {
-    $received_sms = Cdr::where('number', request('number'))
-        ->WhereNotNull('received_sms')
-        ->latest('id')?->value('received_sms');
-    return getOtpFromSms($received_sms);
-});
+Route::get('/products', [ProductsApiController::class, 'index'])->name('products.index');
+
+// Route to get a specific product by ID in either English or Arabic
+Route::get('/products/{id}', [ProductsApiController::class, 'show'])->name('products.show');
+//Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
+//
+//Route::get('/otp', function (Request $request) {
+//    $received_sms = Cdr::where('number', request('number'))
+//        ->WhereNotNull('received_sms')
+//        ->latest('id')?->value('received_sms');
+//    return getOtpFromSms($received_sms);
+//});
 
 /*Route::prefix('v1')->group(function () {
 

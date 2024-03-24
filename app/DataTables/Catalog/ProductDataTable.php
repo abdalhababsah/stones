@@ -25,19 +25,26 @@ class ProductDataTable extends DataTable
                 return '<span class="badge bg-' . ($badgeColors[$product->status] ?? 'secondary') . '">' . ucfirst($product->status) . '</span>';
             })
             ->editColumn('category_type', function ($product) {
-                $badgeColors = ['hot' => 'success', 'new' => 'danger','featured'=>'info'];
+                $badgeColors = ['hot' => 'success', 'new' => 'danger','featured'=>'info','normal'=>'primary'];
                 return '<span class="badge bg-' . ($badgeColors[$product->category_type] ?? 'secondary') . '">' . ucfirst($product->category_type) . '</span>';
             })
             ->addColumn('inventory', function ($product) {
-                return $product->variants->map(function ($variant) {
-                    return $variant->inventory ? $variant->inventory->quantity_available : 'N/A';
-                })->implode('<br>');
+
+                    return $product->inventory ? $product->inventory->quantity_available : 'N/A';
+
             })
+
             ->editColumn('images', function ($product) {
-                return $product->images->map(function ($image) {
-                    return '<img src="' . Storage::disk('s3')->url($image->image_path) . '" class="img-fluid img-thumbnail" style="max-height: 50px;"/>';
-                })->implode('&nbsp;');
+                $firstImage = $product->images->first();
+                if ($firstImage) {
+                    $inlineStyle = 'max-height: 50px; display: block; margin-left: auto; margin-right: auto; transition: transform 0.3s ease;';
+                    $hoverStyle = 'transform: scale(3.5); z-index:99;'; // Define the transform for the hover effect.
+                    return '<img src="' . asset($firstImage->image_path) . '" class="img-fluid img-thumbnail" style="' . $inlineStyle . '" onmouseover="this.style.transform=\'scale(3.5)\'" onmouseout="this.style.transform=\'scale(1)\'"/>';
+                }
+                return 'N/A';
             })
+
+
             ->addColumn('category', function ($product) {
                 return $product->category->name_en ?? 'N/A';
             })
@@ -69,7 +76,7 @@ class ProductDataTable extends DataTable
 
     public function query(Product $model): QueryBuilder
     {
-        return $model->with(['variants.inventory', 'images', 'category', 'dimension', 'seo'])->newQuery();
+        return $model->with(['variants','inventory', 'images', 'category', 'dimension', 'seo'])->newQuery();
     }
 
     public function html(): HtmlBuilder
@@ -94,7 +101,6 @@ class ProductDataTable extends DataTable
             Column::make('category')->title('Category'),
             Column::make('category_type')->title('Category Type'),
             Column::make('status')->title('Status'),
-
             Column::make('dimensions')->title('Dimensions'),
             Column::computed('action')->exportable(false)->printable(false)->width(60)->addClass('text-center'),
         ];

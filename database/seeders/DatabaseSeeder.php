@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
             AboutUsTableSeeder::class,
             ContactUsTableSeeder::class,
             HomeTableSeeder::class,
+            ProductDimensionsTableSeeder::class
         ]);
 
     }

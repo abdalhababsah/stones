@@ -26,19 +26,23 @@ class CategoryController extends Controller
     {
         $validatedData = $request->validate([
             'name_en' => 'required|string|max:255',
+            'name_ar' => 'required|string|max:255',
             'icon_path' => 'image|nullable',
-            'description' => 'string|nullable',
+            'description_en' => 'string|nullable',
+            'description_ar' => 'string|nullable',
         ]);
 
         try {
             if ($request->hasFile('icon_path')) {
                 $filename = Str::slug($request->input('name_en'), '_');
                 $extension = $request->file('icon_path')->getClientOriginalExtension();
-                $fileNameToStore = 'categories_icons/' . $filename . '_' . time() . '.' . $extension;
-                $validatedData['icon_path'] = Storage::disk('s3')->putFileAs('', $request->file('icon_path'), $fileNameToStore, 'public');
+                $fileNameToStore = 'images/' . $filename . '_' . time() . '.' . $extension;
+                // Save the file to the storage
+                $path = $request->file('icon_path')->storeAs('public/' . $fileNameToStore);
+                // Adjust the path for the database
+                $validatedData['icon_path'] = 'storage/' . $fileNameToStore;
             }
 
-            // Create slug from category name
             $validatedData['slug'] = Str::slug($request->input('name_en'), '-');
 
             Category::create($validatedData);
@@ -48,6 +52,8 @@ class CategoryController extends Controller
             return response()->json(['message' => 'Failed to add Category', 'error' => $e->getMessage(), 'status' => 500]);
         }
     }
+
+
 
     public function edit(Category $category)
     {
@@ -59,24 +65,27 @@ class CategoryController extends Controller
     {
         $validatedData = $request->validate([
             'name_en' => 'required|string|max:255',
+            'name_ar' => 'required|string|max:255',
             'icon_path' => 'image|nullable',
-            'description' => 'string|nullable',
+            'description_en' => 'string|nullable',
+            'description_ar' => 'string|nullable',
         ]);
 
         try {
             if ($request->hasFile('icon_path')) {
+                if ($category->icon_path && Storage::exists($category->icon_path)) {
+                    Storage::delete($category->icon_path);
+                }
+
                 $filename = Str::slug($request->input('name_en'), '_');
                 $extension = $request->file('icon_path')->getClientOriginalExtension();
-                $fileNameToStore = 'categories_icons/' . $filename . '_' . time() . '.' . $extension;
-                $validatedData['icon_path'] = Storage::disk('s3')->putFileAs('', $request->file('icon_path'), $fileNameToStore, 'public');
-
-                // Optionally delete the old icon from S3
-                if ($category->icon_path) {
-                    Storage::disk('s3')->delete($category->icon_path);
-                }
+                $fileNameToStore = 'images/' . $filename . '_' . time() . '.' . $extension;
+                // Save the file to the storage
+                $path = $request->file('icon_path')->storeAs('public/' . $fileNameToStore);
+                // Adjust the path for the database
+                $validatedData['icon_path'] = 'storage/' . $fileNameToStore;
             }
 
-            // Update slug in case the name has changed
             $validatedData['slug'] = Str::slug($request->input('name_en'), '-');
 
             $category->update($validatedData);
@@ -90,10 +99,16 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         try {
+            // Check if the category has an associated icon and delete it from storage
             if ($category->icon_path) {
-                Storage::disk('s3')->delete($category->icon_path);
+                // Remove the 'storage/' part from the path to get the correct path in the 'public' disk
+                $imagePath = str_replace('storage/', '', $category->icon_path);
+                if (Storage::disk('public')->exists($imagePath)) {
+                    Storage::disk('public')->delete($imagePath);
+                }
             }
 
+            // Delete the category from the database
             $category->delete();
 
             return response()->json(['message' => 'Category Deleted Successfully', 'status' => 200]);
@@ -101,4 +116,5 @@ class CategoryController extends Controller
             return response()->json(['message' => 'Failed to delete Category', 'error' => $e->getMessage(), 'status' => 500]);
         }
     }
+
 }

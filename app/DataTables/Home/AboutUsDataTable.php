@@ -18,8 +18,8 @@ class AboutUsDataTable extends DataTable
                 return view('pages.home.about_us.columns._actions', compact('aboutUs'));
             })
             ->editColumn('image_path', function ($aboutUs) {
-                $bucketUrl = config('filesystems.disks.s3.url');                $imageUrl = $bucketUrl . $aboutUs->image_path;
-                return '<img src="' . $imageUrl . '" height="50"/>';
+
+                return '<img src="' . asset($aboutUs->image_path) . '" height="50"/>';
             })
             ->rawColumns(['image_path', 'action'])
             ->setRowId('id');
@@ -47,7 +47,9 @@ class AboutUsDataTable extends DataTable
         return [
             Column::make('id')->title('ID')->visible(false),
             Column::make('image_path')->title('Image')->addClass('text-center'),
-            Column::make('content')->title('Content')->addClass('text-center'),
+            Column::make('content_en')->title('Content')->addClass('text-center'),
+            Column::make('content_ar')->title('Content (Arabic)')->addClass('text-center'),
+
             Column::computed('action')
                 ->addClass('text-end text-nowrap')
                 ->exportable(false)

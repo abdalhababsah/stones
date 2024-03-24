@@ -15,7 +15,7 @@ class inventoriesTableSeeder extends Seeder
     {
         DB::table('inventories')->insert([
             [
-                'variant_id' => 1, // assuming the first variant
+                'product_id' => 1, // assuming the first variant
                 'quantity_available' => 100,
             ],
         ]);

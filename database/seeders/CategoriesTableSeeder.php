@@ -14,9 +14,20 @@ class CategoriesTableSeeder extends Seeder
     public function run(): void
     {
         DB::table('categories')->insert([
-            ['name_en' => 'Electronics', 'slug' => 'electronics', 'description' => 'Electronic devices and gadgets.'],
-            ['name_en' => 'Books', 'slug' => 'books', 'description' => 'All kinds of books.'],
-
+            [
+                'name_en' => 'Electronics',
+                'name_ar' => 'إلكترونيات', // Arabic name
+                'slug' => 'electronics',
+                'description_en' => 'Electronic devices and gadgets.',
+                'description_ar' => 'الأجهزة والأدوات الإلكترونية.' // Arabic description
+            ],
+            [
+                'name_en' => 'Books',
+                'name_ar' => 'كتب', // Arabic name
+                'slug' => 'books',
+                'description_en' => 'All kinds of books.',
+                'description_ar' => 'جميع أنواع الكتب.' // Arabic description
+            ],
         ]);
     }
 }

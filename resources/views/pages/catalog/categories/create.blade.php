@@ -13,16 +13,30 @@
                         <input type="text" name="name_en" class="form-control form-control-solid-bg mb-2"
                                placeholder="Category Name" @isset($category) value="{{ $category->name_en }}" @endisset>
                     </div>
+                    <!-- Arabic Name -->
                     <div class="col-md-6 mb-7">
-                        <label class="fw-semibold fs-6 mb-2">Description</label>
-                        <textarea name="description" class="form-control form-control-solid-bg mb-2"
-                                  placeholder="Description">@isset($category)
-                                {{ $category->description }}
-                            @endisset</textarea>
+                        <label class="required fw-semibold fs-6 mb-2">Name (Arabic)</label>
+                        <input type="text" name="name_ar" class="form-control form-control-solid-bg mb-2"
+                               placeholder="إسم الفئة بالعربية" @isset($category) value="{{ $category->name_ar }}" @endisset>
                     </div>
+
+                    <!-- English Description -->
+                    <div class="col-md-6 mb-7">
+                        <label class="fw-semibold fs-6 mb-2">Description (English)</label>
+                        <textarea name="description_en" class="form-control form-control-solid-bg mb-2" placeholder="English Description">@isset($category){{ $category->description_en }}@endisset</textarea>
+                    </div>
+
+                    <!-- Arabic Description -->
+                    <div class="col-md-6 mb-7">
+                        <label class="fw-semibold fs-6 mb-2">Description (Arabic)</label>
+                        <textarea name="description_ar" class="form-control form-control-solid-bg mb-2"
+                                  placeholder="الوصف بالعربية">@isset($category){{ $category->description_ar }}@endisset</textarea>
+                    </div>
+
+
                     <div class="col-md-2 imgUp form-group">
                         <label class="required fw-semibold d-block fs-6 mb-2">Category Icon</label>
-                        <div class="image-input shadow-sm image-input-circle" data-kt-image-input="true"
+                        <div class="image-input shadow-sm " data-kt-image-input="true"
                              style="background-image: url(/assets/media/svg/avatars/blank.svg)">
                             <!--begin::Image preview wrapper-->
                             <div class="image-input-wrapper w-125px h-125px"
@@ -33,7 +47,8 @@
                             <label
                                     class="btn btn-icon btn-circle btn-color-muted btn-active-color-primary w-25px h-25px bg-body shadow"
                                     data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change icon">
-                                <i class="ki-duotone ki-pencil fs-6"></i>
+                                <i class="ki-duotone ki-pencil fs-6"><span class="path1"></span><span class="path2"></span></i>
+
                                 <input type="file" name="icon_path" accept="image/*"
                                        style="width: 0px;height: 0px;overflow: hidden;"/>
                             </label>

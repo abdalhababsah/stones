@@ -1,5 +1,4 @@
 <?php
-
 namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -16,10 +15,14 @@ class ProductsTableSeeder extends Seeder
         DB::table('products')->insert([
             [
                 'name_en' => 'Smartphone',
-                'slug' => 'smartphone',
-                'description' => 'A high-quality smartphone.',
-                'qrcode' => null, // or generate a QR code value
-                'category_id' => 1, // assuming Electronics is id 1
+                'name_ar' => 'هاتف ذكي',
+                'slug_en' => 'smartphone',
+                'slug_ar' => 'هاتف-ذكي',
+
+                'description_en' => 'A high-quality smartphone.',
+                'description_ar' => 'هاتف ذكي عالي الجودة.',
+                'qrcode' => null,
+                'category_id' => 1,
                 'status' => 'active',
             ],
         ]);

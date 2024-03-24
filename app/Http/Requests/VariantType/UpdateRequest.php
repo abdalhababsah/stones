@@ -23,6 +23,12 @@ class UpdateRequest extends FormRequest
                 'max:255',
                 Rule::unique('variant_types')->ignore($this->variant_type),
             ],
+            'name_ar' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('variant_types')->ignore($this->variant_type),
+            ],
         ];
     }
 }

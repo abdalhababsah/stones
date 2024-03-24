@@ -25,7 +25,7 @@
                     <div class="col-md-2 imgUp form-group">
 
                         <label class="required fw-semibold  d-block fs-6 mb-2">Brand Icon</label>
-                        <div class="image-input shadow-sm image-input-circle" data-kt-image-input="true"
+                        <div class="image-input shadow-sm " data-kt-image-input="true"
                              style="background-image: url(/assets/media/svg/avatars/blank.svg)">
                             <!--begin::Image preview wrapper-->
                             <div class="image-input-wrapper w-125px h-125px"

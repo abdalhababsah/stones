@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('homes', function (Blueprint $table) {
             $table->id();
-            $table->string('image_title');
+            $table->string('image_title_en');
+            $table->string('image_title_ar');
             $table->string('image_path',255);
             $table->integer('sort_order');
             $table->timestamps();

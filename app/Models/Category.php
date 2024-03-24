@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 
 class Category extends Model
 {
@@ -15,4 +16,13 @@ class Category extends Model
     {
         return $this->hasMany(Product::class);
     }
+
+    public function getIconPathAttribute()
+    {
+        $icon_path = Arr::get($this->attributes, 'icon_path');
+        if ($icon_path)
+            return config('app.url') . $icon_path;
+        return $icon_path;
+    }
+
 }

@@ -40,6 +40,7 @@ class VariantTypesDataTable extends DataTable
         return [
             Column::make('id')->title('ID')->visible(false),
             Column::make('name_en')->title('Name')->addClass('d-flex align-items-center'),
+            Column::make('name_ar')->title('Name (Arabic)')->addClass('text-center'),
 
             Column::computed('action')
                 ->addClass('text-end text-nowrap')

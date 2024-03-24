@@ -16,12 +16,12 @@ public function dataTable(QueryBuilder $query): EloquentDataTable
 {
 return (new EloquentDataTable($query))
 ->addColumn('action', function (Home $home) {
-return view('pages.home.images.columns._actions', compact('home')); // Ensure you have this view for actions
+return view('pages.home.images.columns._actions', compact('home'));
 })
 ->editColumn('image_path', function ($home) {
-    $bucketUrl = 'https://stones-3-15.s3.us-east-2.amazonaws.com/home_images/';
-    $imageUrl = $bucketUrl . $home->image_path;
-    return '<img src="' . $imageUrl . '" height="50"/>';
+
+    return '<img src="' . asset($home->image_path) . '" height="50"/>';
+
 })
 ->rawColumns(['image_path', 'action'])
 ->setRowId('id');
@@ -49,11 +49,12 @@ protected function getColumns(): array
 return [
 Column::make('id')->title('ID')->visible(false),
 Column::make('image_path')->title('Image')->addClass('text-center'),
-    Column::make('image_title')->title('Image Title')->addClass('text-center'),
+    Column::make('image_title_en')->title('Image Title')->addClass('text-center'),
+    Column::make('image_title_ar')->title('Image Title (Arabic)')->addClass('text-center'),
 
     Column::make('sort_order')->title('Sort Order')->addClass('text-center'),
 Column::computed('action')
-->addClass('text-end text-nowrap')
+    ->addClass('text-end text-nowrap')
 ->exportable(false)
 ->printable(false)
 ->width(120)

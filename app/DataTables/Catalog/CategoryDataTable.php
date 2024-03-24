@@ -46,9 +46,12 @@ class CategoryDataTable extends DataTable
         return [
             Column::make('id')->title('ID')->visible(false),
             Column::make('name_en')->title('Name')->addClass('d-flex align-items-center'),
+            Column::make('name_ar')->title('Name (Arabic)')->addClass('text-right'),
+
             Column::make('icon_path')->title('Icon')->addClass('text-center'),
             Column::make('slug')->title('Slug')->addClass('text-center'),
-            Column::make('description')->title('Description')->addClass('text-center'),
+            Column::make('description_en')->title('Description')->addClass('text-center'),
+            Column::make('description_ar')->title('Description (Arabic)')->addClass('text-center'),
 
             Column::computed('action')
                 ->addClass('text-end text-nowrap')

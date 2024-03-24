@@ -16,9 +16,10 @@ class ProductSeoTableSeeder extends Seeder
         DB::table('product_seo')->insert([
             [
                 'product_id' => 1,
-                'meta_title' => 'Buy Smartphone Online',
-                'meta_description' => 'Purchase the latest smartphone online at our store.',
-                'seourl' => 'buy-smartphone-online',
+                'meta_title_en' => 'Buy Smartphone Online',
+                'meta_title_ar' => 'شراء هاتف ذكي عبر الإنترنت',
+                'meta_description_en' => 'Purchase the latest smartphone online at our store.',
+                'meta_description_ar' => 'اشترِ أحدث هاتف ذكي عبر الإنترنت في متجرنا.', // Arabic meta description
             ],
         ]);
     }

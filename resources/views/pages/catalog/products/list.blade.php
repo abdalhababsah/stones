@@ -66,6 +66,7 @@
             document.getElementById('mySearchInput').addEventListener('keyup', function () {
                 window.LaravelDataTables['product-table'].search(this.value).draw();
             });
+            remove('remove_btn', 'catalog/products', 'product-table', '{{ csrf_token() }}');
 
 
         </script>

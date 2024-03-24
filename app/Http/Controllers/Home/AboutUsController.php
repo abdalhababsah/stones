@@ -27,15 +27,19 @@ class AboutUsController extends Controller
     {
         $validatedData = $request->validate([
             'image_path' => 'required|image',
-            'content' => 'required|string',
+            'content_en' => 'required|string',
+            'content_ar' => 'required|string',
         ]);
 
         try {
             if ($request->hasFile('image_path')) {
-                $filename = Str::slug($request->input('name'), '_');
+                $filename = Str::slug(now()->toDateTimeString(), '_'); // Use current timestamp if name is not available
                 $extension = $request->file('image_path')->getClientOriginalExtension();
-                $fileNameToStore = $filename . '_' . time() . '.' . $extension;
-                $validatedData['image_path'] = Storage::disk('s3')->putFileAs('about_us_images', $request->file('image_path'), $fileNameToStore);
+                $fileNameToStore = 'images/' . $filename . '_' . time() . '.' . $extension;
+                // Save the file to the storage
+                $path = $request->file('image_path')->storeAs('public/' . $fileNameToStore);
+                // Adjust the path for the database
+                $validatedData['image_path'] = 'storage/' . $fileNameToStore;
             }
 
             AboutUs::create($validatedData);
@@ -48,7 +52,6 @@ class AboutUsController extends Controller
 
     public function edit(AboutUs $aboutUs)
     {
-        // Return a view for editing an existing About Us entry
         return view('pages.home.about_us.create', compact('aboutUs'));
     }
 
@@ -56,20 +59,25 @@ class AboutUsController extends Controller
     {
         $validatedData = $request->validate([
             'image_path' => 'image|nullable',
-            'content' => 'required|string',
+            'content_en' => 'required|string',
+            'content_ar' => 'required|string',
         ]);
 
         try {
             if ($request->hasFile('image_path')) {
-                $filename = Str::slug($request->input('name'), '_');
-                $extension = $request->file('image_path')->getClientOriginalExtension();
-                $fileNameToStore = $filename . '_' . time() . '.' . $extension;
-                $validatedData['image_path'] = Storage::disk('s3')->putFileAs('about_us_images', $request->file('image_path'), $fileNameToStore);
-
-                // Optionally delete the old image from S3
+                // Optionally delete the old image from storage
                 if ($aboutUs->image_path) {
-                    Storage::disk('s3')->delete($aboutUs->image_path);
+                    $oldImagePath = str_replace('storage/', '', $aboutUs->image_path);
+                    Storage::disk('public')->delete($oldImagePath);
                 }
+
+                $filename = Str::slug(now()->toDateTimeString(), '_'); // Use current timestamp if name is not available
+                $extension = $request->file('image_path')->getClientOriginalExtension();
+                $fileNameToStore = 'images/' . $filename . '_' . time() . '.' . $extension;
+                // Save the new file to the storage
+                $path = $request->file('image_path')->storeAs('public/' . $fileNameToStore);
+                // Adjust the path for the database
+                $validatedData['image_path'] = 'storage/' . $fileNameToStore;
             }
 
             $aboutUs->update($validatedData);
@@ -82,16 +90,22 @@ class AboutUsController extends Controller
 
     public function destroy(AboutUs $aboutUs)
     {
+
         try {
+            // Check if the category has an associated icon and delete it from storage
             if ($aboutUs->image_path) {
-                Storage::disk('s3')->delete($aboutUs->image_path);
+                // Remove the 'storage/' part from the path to get the correct path in the 'public' disk
+                $imagePath = str_replace('storage/', '', $aboutUs->image_path);
+                if (Storage::disk('public')->exists($imagePath)) {
+                    Storage::disk('public')->delete($imagePath);
+                }
             }
 
             $aboutUs->delete();
 
-            return response()->json(['message' => 'About Us Deleted Successfully', 'status' => 200]);
+            return response()->json(['message' => 'Category Deleted Successfully', 'status' => 200]);
         } catch (\Exception $e) {
-            return response()->json(['message' => 'Failed to delete About Us', 'error' => $e->getMessage(), 'status' => 500]);
+            return response()->json(['message' => 'Failed to delete Category', 'error' => $e->getMessage(), 'status' => 500]);
         }
     }
 }

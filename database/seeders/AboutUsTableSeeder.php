@@ -16,7 +16,9 @@ class AboutUsTableSeeder extends Seeder
         DB::table('about_us')->insert([
             [
                 'image_path' => 'image.jpg',
-                'content' => 'About us content goes here.',
+                'content_en' => 'About us content goes here.',
+                'content_ar' => 'هنا محتوى الصفحه',
+
             ],
         ]);
     }

@@ -9,6 +9,11 @@ class Home extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected $fillable = [
+        'image_title_en',
+        'image_title_ar',
+        'image_path',
+        'sort_order',
+    ];
 
 }

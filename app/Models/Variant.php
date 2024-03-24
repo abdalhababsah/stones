@@ -16,10 +16,7 @@ class Variant extends Model
         return $this->belongsTo(Product::class);
     }
 
-    public function inventory()
-    {
-        return $this->hasOne(Inventory::class);
-    }
+
 
     public function variantType()
     {

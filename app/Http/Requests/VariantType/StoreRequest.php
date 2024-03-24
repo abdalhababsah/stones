@@ -12,6 +12,7 @@ class StoreRequest extends FormRequest
     {
         return [
             'name_en' => 'required|string|max:255',
+            'name_ar' => 'required|string|max:255',
         ];
     }
 }

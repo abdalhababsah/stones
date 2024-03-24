@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('about_us', function (Blueprint $table) {
             $table->id();
             $table->string('image_path',255);
-            $table->text('content');
+            $table->text('content_en');
+            $table->text('content_ar');
             $table->timestamps();
         });
     }

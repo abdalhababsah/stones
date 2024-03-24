@@ -16,7 +16,10 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class);
     }
-
+    public function inventory(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(Inventory::class);
+    }
     public function variants(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Variant::class);
