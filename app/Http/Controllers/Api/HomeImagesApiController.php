@@ -10,7 +10,7 @@ class HomeImagesApiController extends Controller
 {
     public function index(Request $request)
     {
-        $lang = $request->query('lang', 'en'); // Default to English if not specified
+        $lang = $request->query('lang', 'en');
 
         $images = Home::all()->map(function ($image) use ($lang) {
             return [
